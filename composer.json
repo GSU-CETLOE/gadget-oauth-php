@@ -1,37 +1,39 @@
 {
-  "name": "mjfk23/gadget-oauth",
+  "name": "gsu-cetloe/gadget-oauth-php",
   "description": "Gadget library for working with OAuth",
   "type": "library",
   "keywords": [],
-  "homepage": "https://github.com/mjfk23/gadget-oauth",
+  "homepage": "https://github.com/GSU-CETLOE/gadget-oauth-php",
   "license": "MIT",
   "authors": [
     {
-      "name": "Melody Kimball",
-      "role": "lead"
+      "name": "Jeb Barger",
+      "role": "Application Developer"
     }
   ],
-  "support": {
-    "issues": "https://github.com/mjfk23/gadget-oauth/issues",
-    "wiki": "https://github.com/mjfk23/gadget-oauth/wiki",
-    "source": "https://github.com/mjfk23/gadget-oauth"
-  },
   "require": {
-    "php": "^8.1",
-    "mjfk23/gadget-http": "^2.0"
+    "php": "8.1.*",
+    "gsu-cetloe/gadget-core-php": "^1.0",
+    "gsu-cetloe/gadget-http-php": "^1.0",
+    "gsu-cetloe/symfony-bundle": "^1.0",
+    "psr/http-message": "^2.0"
   },
   "require-dev": {
     "phpstan/phpstan": "^2.0",
     "phpstan/phpstan-strict-rules": "^2.0",
     "phpstan/extension-installer": "^1.4",
-    "squizlabs/php_codesniffer": "^3.10"
+    "phpunit/phpunit": "^10.5",
+    "squizlabs/php_codesniffer": "^3.10",
+    "symfony/cache": "6.4.*"
   },
   "autoload": {
     "psr-4": {
-      "Gadget\\Oauth\\": [
-        "src/",
-        "bundle/"
-      ]
+      "Gadget\\Oauth\\": ["src/", "bundle/"]
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Gadget\\Oauth\\Tests\\": "tests/"
     }
   },
   "config": {
@@ -39,12 +41,21 @@
       "phpstan/extension-installer": true,
       "php-http/discovery": true
     },
+    "platform": {
+      "php": "8.1.0"
+    },
     "sort-packages": true,
     "optimize-autoloader": true,
     "apcu-autoloader": true
   },
   "scripts": {
     "phpcs": "vendor/bin/phpcs",
-    "phpstan": "vendor/bin/phpstan analyse -c phpstan.neon"
+    "phpstan": "vendor/bin/phpstan analyse -c phpstan.neon",
+    "test": "vendor/bin/phpunit",
+    "check": [
+      "@phpcs",
+      "@phpstan",
+      "@test"
+    ]
   }
 }

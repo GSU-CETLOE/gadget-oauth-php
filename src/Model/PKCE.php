@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Gadget\Oauth\Model;
 
+use Gadget\Oauth\Exception\AuthException;
+
 class PKCE
 {
     /** @var string */
@@ -30,9 +32,10 @@ class PKCE
                 ),
                 is_array($bytes)
                     ? $bytes
-                    : throw new \Random\RandomError("Unable to generate random number to use in PKCE verifier")
+                    : throw new AuthException("Unable to generate random number to use in PKCE verifier")
             )
         );
-        $this->challenge = base64_encode(hash('SHA256', $this->verifier, true));
+        // RFC 7636 S256: the challenge is the base64url form of the SHA-256 digest, with no padding.
+        $this->challenge = rtrim(strtr(base64_encode(hash('SHA256', $this->verifier, true)), '+/', '-_'), '=');
     }
 }
